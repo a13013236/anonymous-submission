@@ -24,12 +24,7 @@ class DynamicStockClustering(nn.Module):
         self.embedding_dim = embedding_dim
         self.min_var_ratio = min_var_ratio
         self.temperature = temperature
-
-        self.market_projection = None
-        self.n_clusters = None
         self.n_subclusters = n_subclusters
-        self.pca_axes = None
-        self.current_n_clusters = None
         
     def extract_latent_segments(self, stock_embs):
         hidden_np = stock_embs.detach().cpu().numpy()
