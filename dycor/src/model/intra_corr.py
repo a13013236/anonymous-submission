@@ -134,10 +134,10 @@ class IntraStockCorrelation(nn.Module):
 
     def forward(
         self,
-        stock_embs,                      # Stock embeddings [N, hidden_dim]
-        soft_cluster_weights,            # Soft cluster assignments [N, n_clusters]
-        latent_subsegment_assignments,   # Subcluster assignments [N, n_clusters, n_subclusters]
-        current_n_clusters               # Number of clusters
+        stock_embs,
+        soft_cluster_weights,
+        latent_subsegment_assignments,
+        current_n_clusters
     ):
         N = stock_embs.size(0)
 
