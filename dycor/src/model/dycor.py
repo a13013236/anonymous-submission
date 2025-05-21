@@ -12,7 +12,7 @@ class DYCOR(nn.Module):
     This is the main model that integrates all components:
     1. Stock Encoding - encodes historical features of stocks
     2. Dynamic Stock Clustering - clusters stocks into market segments and subsegments
-    3. Intra-Stock Correlation - models relationships between stocks within same segment
+    3. Intra-Stock Correlation - models relationships between stocks within subcluster
     4. Inter-Cluster Aggregation - combines multiple views of each stock
     5. Prediction - forecasts stock return ratios
     """
