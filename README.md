@@ -15,7 +15,7 @@ This repository contains the implementation of our research work "DYCOR: Capturi
 * `dycor.py`: Main model implementation integrating all components
 * `encoding.py`: Stock encoding module for processing historical features
 * `clustering.py`: Dynamic PCA-based clustering of stocks into market segments
-* `intra_corr.py`: Attention mechanism for modeling relationships within segments
+* `intra_corr.py`: Attention mechanism for modeling relationships within sub-clusters
 * `aggregation.py`: Combining representations from different market perspectives
 * `loss.py`: Implementation of correlation-aware and regression loss functions
 * `main.py`: Entry point for training and evaluation
