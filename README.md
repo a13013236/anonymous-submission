@@ -1,6 +1,6 @@
 # **Anonymous Code for Double-Blind Review**
 
-This repository contains the implementation of our research work "DYCOR: Dynamic Correlation for Stock Trend Prediction" currently under double-blind peer review.
+This repository contains the implementation of our research work "DYCOR: Capturing Hidden Stock Relationships for Stock Trend Prediction" currently under double-blind peer review.
 
 ## **Components**
 
