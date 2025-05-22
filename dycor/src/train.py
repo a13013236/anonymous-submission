@@ -79,8 +79,6 @@ def train_epoch(model, optimizer, data_loader, start_index, end_index, config):
     
     return total_loss / num_steps
 
-# train.py (Part 2)
-
 def validate(model, data_loader, start_index, end_index, config):
     model.eval()
     
