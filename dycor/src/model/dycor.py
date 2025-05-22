@@ -35,34 +35,25 @@ class DYCOR(nn.Module):
         self.hidden_dim = hidden_dim
         self.n_subclusters = n_subclusters
 
-        # Stock encoding module: processes historical features to create embeddings
         self.stock_encoding = StockEncoding(
             time_steps=lookback_length,
             channels=fea_num
         )
-
-        # Clustering module: groups stocks into dynamic market segments
         self.clustering = DynamicStockClustering(
             embedding_dim=hidden_dim,
             min_var_ratio=min_var_ratio,
             temperature=temperature,
             n_subclusters=n_subclusters
         )
-
-        # Intra-correlation module: models relationships within segments
         self.intra_corr = IntraStockCorrelation(
             hidden_dim=hidden_dim,
             n_subclusters=n_subclusters,
             dropout=dropout
         )
-
-        # Aggregation module: combines representations from different segments
         self.aggregation = InterClusterAggregator(
             hidden_dim=hidden_dim,
             n_subclusters=n_subclusters
         )
-
-        # Prediction module: multilayer perceptron to forecast return ratios
         self.prediction = nn.Sequential(
             nn.LayerNorm(hidden_dim),
             nn.Linear(hidden_dim, hidden_dim),
@@ -82,22 +73,13 @@ class DYCOR(nn.Module):
             pred: Predicted return ratios [N, 1]
             clustering_info: Dictionary containing clustering information for analysis
         """
-        # 1. Encode historical stock features into embeddings
+
         stock_embs = self.stock_encoding(batch_x)
-        
-        # 2. Perform dynamic stock clustering
         soft_cluster_weights, latent_subsegment_assignments, current_n_clusters, market_stock_similarities, market_reps = self.clustering(stock_embs)
-        
-        # 3. Model intra-stock correlations within subclusters
         interval_outputs = self.intra_corr(stock_embs, soft_cluster_weights, latent_subsegment_assignments, current_n_clusters)
-        
-        # 4. Aggregate stock representations across clusters
         final_stock_reps = self.aggregation(stock_embs, soft_cluster_weights, latent_subsegment_assignments, interval_outputs, current_n_clusters)
-        
-        # 5. Make predictions for stock return ratios
         pred = self.prediction(final_stock_reps)
 
-        # Return additional information for analysis and visualization
         clustering_info = {
             'market_stock_similarities': market_stock_similarities,
             'market_reps': market_reps,
